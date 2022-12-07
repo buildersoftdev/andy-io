@@ -9,7 +9,7 @@ namespace Andy.X.IO.Abstractions
     {
         public void InitializeComponents();
 
-        public IService GetService();
+        public IService? GetService(string serviceId);
         public ConcurrentDictionary<string, IService> GetServices();
 
         public void StartRuntime();

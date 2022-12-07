@@ -7,6 +7,8 @@ namespace Andy.X.IO
     {
         public event GlobalServiceStatusChangedEventHandler ServiceStatusChanged;
 
+        private bool _isRunning;
+
         private readonly ConcurrentDictionary<string, IService> _services;
 
         public RuntimeService()
@@ -19,24 +21,29 @@ namespace Andy.X.IO
             throw new NotImplementedException();
         }
 
-        public IService GetService()
+        public IService? GetService(string serviceId)
         {
-            throw new NotImplementedException();
+            if (_services.TryGetValue(serviceId, out var service))
+                return service;
+
+            return null;
         }
 
         public ConcurrentDictionary<string, IService> GetServices()
         {
-            throw new NotImplementedException();
+            return _services;
         }
 
         public void StartRuntime()
         {
-            throw new NotImplementedException();
+            if (_isRunning == false)
+                _isRunning = true;
         }
 
         public void StopRuntime()
         {
-            throw new NotImplementedException();
+            if (_isRunning == true)
+                _isRunning = false;
         }
 
         public void StartService(string serviceId)
@@ -51,12 +58,12 @@ namespace Andy.X.IO
 
         public void AddService(string serviceId, IService service)
         {
-            throw new NotImplementedException();
+            _services.TryAdd(serviceId, service);
         }
 
         public void RemoveService(string serviceId)
         {
-            throw new NotImplementedException();
+            _services.Remove(serviceId, out _);
         }
     }
 }
